@@ -8,8 +8,8 @@ let noteHeight = 100;
 let noteWidth = 10;
 let brightness = 47;
 let separation = 0.1;
-let a = 3
-let b = 0.6
+let a = 100
+let b = 1
 let showLeds = true;
 let showPartiture = true;
 
@@ -28,10 +28,10 @@ let ro = 0;
 let co = 0;
 async function f2() {
   // load a midi file in the browser
-  //midi = await Midi.fromUrl("./midis/Moonlight.mid");
+  midi = await Midi.fromUrl("./midis/Moonlight.mid");
 
-midi2 = await fetch("./midis/simple.json")
-midi = await midi2.json();
+//midi2 = await fetch("./midis/simple.json")
+//midi = await midi2.json();
 
   midi.tracks.forEach((track, trackIndex) => {
     if (trackIndex === 0) {
@@ -85,8 +85,7 @@ midi = await midi2.json();
 
 setInterval((e) => {
   document.getElementById("toneTime").innerHTML = Tone.now();
-  if (isPlaying)
-    document.getElementById("time").innerHTML = Tone.now() - realTime;
+  if (isPlaying) document.getElementById("time").innerHTML = Tone.now() - realTime;
 
   notesToSend = calculeNotesToDisplay();
 

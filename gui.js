@@ -25,12 +25,15 @@ document
 document
   .getElementById("separationRange")
   .addEventListener("input", separationRangeChange);
-  document
+document
   .getElementById("aRange")
   .addEventListener("input", aRangeChange);
-  document
+document
   .getElementById("bRange")
   .addEventListener("input", bRangeChange);
+document
+  .getElementById("bpmRange")
+  .addEventListener("input", bpmRangeChange);
 document
   .getElementById("showLeds")
   .addEventListener("change", showLedsChange);
@@ -92,6 +95,13 @@ function timeRangeChange(e) {
     document.getElementById("bRangeValue").innerHTML =
       e.target.value;
       b = parseFloat(e.target.value);
+  }
+  function bpmRangeChange(e) {
+    document.getElementById("bpmRangeValue").innerHTML =
+      e.target.value;
+      bpm = parseFloat(e.target.value);
+      Tone.Transport.bpm.value = bpm
+      console.log(bmp)
   }
 
 

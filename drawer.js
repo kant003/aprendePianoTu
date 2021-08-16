@@ -22,12 +22,12 @@ function drawPartitura(midi) {
      
       rect(
         note.midi * noteSeparation + offsetHorizontal,
-        (+t - note.time) * noteHeight + offsetVertical,
+        (+t - note.time) * a + offsetVertical,
         noteWidth,
-        -note.duration * noteHeight
+        -note.duration * a
       );
 
-      
+      //console.log(note.time)
     });
   });
 }
@@ -50,20 +50,33 @@ function drawNameNotes() {
 
   }
 }
-
+//a escala partitura
+//b escala de representacion leds
 function drawLeds() {
     noFill();
     stroke("black");
     const numRows  = 16
     for (let i = 21; i < 108; i++) {
-      for (let j = 0; j < 16*separation; j+=separation) {
+      for (let j = 0; j <=15; j++) {
+          let x = (3*j/15)  * b// convertimos los numeros del 0 al 15 a una escala de 0 a 0.2*15=3
+          //console.log(x)
           rect(i * noteSeparation + offsetHorizontal, 
-             - j * noteHeight + offsetVertical, 
+             - x *a  + offsetVertical, 
             noteWidth, 
-            10);
+            -10);
       }
     }
   }
+
+  /**
+   * 
+   rect(
+        note.midi * noteSeparation + offsetHorizontal,
+        (+t - note.time) * noteHeight + offsetVertical,
+        noteWidth,
+        -note.duration * noteHeight
+      );
+   */
 
 
  function drawAll(notesToSend){
@@ -79,9 +92,9 @@ function drawLeds() {
     fill(note.r, note.g, note.b);
     rect(
       note.midi * noteSeparation + offsetHorizontal,
-      -note.timeOffset * noteHeight + offsetVertical  ,
+      -note.timeOffset * a  + offsetVertical  ,
       noteWidth,
-     10
+     -10
     );
   })
 }
@@ -93,34 +106,36 @@ function calculeNotesToDisplay(){
 
   let ligthDistance = 0;
   let ligthDistanceIncrement = separation;
-  for(let i=0;i<16;i++){
-  listNotes = listNotes.concat(calculeNotesToDisplayAtTime(ligthDistance) )
+  for(let i=0;i<=15;i++){
+    
+  listNotes = listNotes.concat(calculeNotesToDisplayAtTime(i) )
    ligthDistance += ligthDistanceIncrement;
   }
   return listNotes
 }
 
 
-function calculeNotesToDisplayAtTime(timeOffset){
-
+function calculeNotesToDisplayAtTime(i){
+  const dist = 0.2*15
+  let x = (dist*i/15)  * b // convertimos los numeros del 0 al 15 a una escala de 0 a 0.2*15=3
 
   let listNotes = []
   const t = isPlaying===true ?  (Tone.now() - realTime) : realTime
 
 
   midi.tracks.forEach( (track,trackIndex) => {
-    let notes = getNotesOfTime(t + timeOffset, trackIndex);
+    let notes = getNotesOfTime(t + x, trackIndex);
     notes.forEach((note, noteIndex) => {
 
-      let c = calculeNoteColor(t, note, timeOffset, trackIndex);
-      /*c.r = 255
+      let c = calculeNoteColor(t, note, x, trackIndex);
+     /* c.r = 255
       c.g=0
       c.b=0*/
     //const row = Math.round( (3*timeOffset)/0.2 )
-    const row = Math.round( (timeOffset/separation)/1 )
+    const row = Math.round( i )
     
 
-    listNotes.push({r:c.r, g:c.g, b:c.b, row:row, col:note.midi, /*disp: dispNumber, numPix: numPix,*/ midi:note.midi, timeOffset:timeOffset} )
+    listNotes.push({r:c.r, g:c.g, b:c.b, row:row, col:note.midi, /*disp: dispNumber, numPix: numPix,*/ midi:note.midi, timeOffset:x} )
   });
   })
  return listNotes
