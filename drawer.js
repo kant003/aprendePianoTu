@@ -58,7 +58,9 @@ function drawLeds() {
     const numRows  = 16
     for (let i = 21; i < 108; i++) {
       for (let j = 0; j <=15; j++) {
-          let x = (3*j/15)  * b// convertimos los numeros del 0 al 15 a una escala de 0 a 0.2*15=3
+          const espace = separation//separation*15
+      
+          let x = (espace*j/15)  * b// convertimos los numeros del 0 al 15 a una escala de 0 a 0.2*15=3
           //console.log(x)
           rect(i * noteSeparation + offsetHorizontal, 
              - x *a  + offsetVertical, 
@@ -104,20 +106,21 @@ function calculeNotesToDisplay(){
 
   listNotes = []
 
-  let ligthDistance = 0;
-  let ligthDistanceIncrement = separation;
+  //let ligthDistance = 0;
+  //let ligthDistanceIncrement = separation;
   for(let i=0;i<=15;i++){
     
   listNotes = listNotes.concat(calculeNotesToDisplayAtTime(i) )
-   ligthDistance += ligthDistanceIncrement;
+  // ligthDistance += ligthDistanceIncrement;
   }
   return listNotes
 }
 
 
 function calculeNotesToDisplayAtTime(i){
-  const dist = 0.2*15
-  let x = (dist*i/15)  * b // convertimos los numeros del 0 al 15 a una escala de 0 a 0.2*15=3
+  const space = separation//separation*15
+
+  let x = (space*i/15)  * b // convertimos los numeros del 0 al 15 a una escala de 0 a 0.2*15=3
 
   let listNotes = []
   const t = isPlaying===true ?  (Tone.now() - realTime) : realTime

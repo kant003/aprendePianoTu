@@ -7,7 +7,7 @@ let offsetVertical = 360;
 let noteHeight = 100;
 let noteWidth = 10;
 let brightness = 47;
-let separation = 0.1;
+let separation = 2; // cuanto tiempo (segundos) representa el modulo de neopixel en vertical
 let a = 100
 let b = 1
 let showLeds = true;
@@ -28,10 +28,10 @@ let ro = 0;
 let co = 0;
 async function f2() {
   // load a midi file in the browser
-  midi = await Midi.fromUrl("./midis/Moonlight.mid");
+  //midi = await Midi.fromUrl("./midis/Moonlight.mid");
 
-//midi2 = await fetch("./midis/simple.json")
-//midi = await midi2.json();
+midi2 = await fetch("./midis/simple.json")
+midi = await midi2.json();
 
   midi.tracks.forEach((track, trackIndex) => {
     if (trackIndex === 0) {
